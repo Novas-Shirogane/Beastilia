@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ログイン - Beastilia（仮）</title>
+<style>
+body {
+    background: #1e1e1e;
+    color: #eee;
+    font-family: sans-serif;
+    margin: 0;
+}
+.container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: #2b2b2b;
+    padding: 20px 30px;
+    border-radius: 4px;
+}
+h1 {
+    text-align: center;
+    margin-top: 0;
+}
+label {
+    display: block;
+    margin-top: 15px;
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 3px;
+    border: 1px solid #555;
+    background: #1a1a1a;
+    color: #eee;
+}
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #4a4a4a;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background: #666;
+}
+.errorlist {
+    color: #ff8080;
+    list-style: none;
+    padding-left: 0;
+    margin: 5px 0 0;
+    font-size: 13px;
+}
+a.back {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: #ccc;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>ログイン</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <label>
+            {{ form.login_id.label_tag }}
+            {{ form.login_id }}
+            {{ form.login_id.errors }}
+            {% if form.login_id.help_text %}
+                <div style="font-size:12px;color:#aaa;margin-top:2px;">
+                    {{ form.login_id.help_text }}
+                </div>
+            {% endif %}
+        </label>
+
+        <label>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {{ form.password.errors }}
+        </label>
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <a href="/" class="back">← トップに戻る</a>
+</div>
+</body>
+</html>

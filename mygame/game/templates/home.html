@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Beastilia（仮）</title>
+<style>
+body {
+    background: #1e1e1e;
+    color: #eee;
+    font-family: sans-serif;
+    margin: 0;
+    text-align: center;
+}
+.header {
+    padding: 40px 0;
+}
+.logo {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.menu {
+    margin-top: 30px;
+}
+.menu a {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    width: 200px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.menu a:hover {
+    background: #555;
+}
+.footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #aaa;
+}
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Beastilia（仮）</div>
+        <div>― １日１回の巡りゆく冒険 ―</div>
+
+        {% if user.is_authenticated %}
+            <div style="margin-top:10px;font-size:14px;">
+                ログイン中ユーザ: {{ user.userprofile.account_id }} /
+                <a href="/logout/" style="color:#ccc;">ログアウト</a>
+            </div>
+        {% else %}
+            <div style="margin-top:10px;font-size:14px;">
+                ログインしていません
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="menu">
+        <a href="/register/">新規登録</a>
+        <a href="/login/">ログイン</a>
+        <a href="/terms/">利用規約</a>
+        <a href="/news/">更新履歴</a>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Beastilia Project
+    </div>
+</body>
+</html>
