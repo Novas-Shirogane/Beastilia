@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 import re
-from .models import UserProfile 
+from .models import UserProfile, Character
 
 ACCOUNT_ID_REGEX = r'^[A-Za-z0-9_-]{5,20}$'
 PASSWORD_REGEX_ALLOWED = r'^[A-Za-z0-9!$%&\'()*+,/;<=>?\[\]^{}~]{8,64}$'
@@ -93,6 +93,23 @@ def validate_password_strength(password):
         raise forms.ValidationError(
             '大文字・小文字・数字・記号のうち、少なくとも2種類を含めてください。'
         )
+
+#キャラ作成
+class CharacterCreateForm(forms.ModelForm):
+    class Meta:
+        model = Character
+        fields = ('name',)
+        labels = {
+            'name': 'キャラ名',
+        }
+
+    def clean_name(self):
+        name = self.cleaned_data['name'].strip()
+        if len(name) == 0:
+            raise forms.ValidationError("名前を入力してください。")
+        if len(name) > 15:
+            raise forms.ValidationError("名前は15文字以内で入力してください。")
+        return name
 
 class LoginForm(forms.Form):
     login_id = forms.CharField(
