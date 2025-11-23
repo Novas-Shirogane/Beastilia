@@ -10,10 +10,17 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.account_id
 
+class Location(models.Model):
+    name = models.CharField(max_length=50)
+    code = models.PositiveSmallIntegerField(unique=True) 
+
+    def __str__(self):
+        return self.name
+
 class Character(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     race = models.PositiveSmallIntegerField(default=0)
     job = models.PositiveSmallIntegerField(default=0)
     rank = models.PositiveSmallIntegerField(default=1)
-    location_id = models.PositiveSmallIntegerField(default=0)
+    location = models.ForeignKey("Location", on_delete=models.PROTECT, null=True, blank=True)

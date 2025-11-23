@@ -1,4 +1,6 @@
+import os
 from django.shortcuts import render, redirect
+from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
@@ -60,6 +62,10 @@ def login_view(request):
 def onboarding(request):
     profile = request.user.userprofile
 
+    #種族アイコン一覧を表示する
+    icons_dir = os.path.join(settings.BASE_DIR, "game/static/game/icons/races")
+    ricons = [f for f in os.listdir(icons_dir) if f.endswith(".png")]
+
     if request.method == 'POST':
         form = CharacterCreateForm(request.POST)
         if form.is_valid():
@@ -76,7 +82,8 @@ def onboarding(request):
 
     return render(request, 'onboarding.html', {
         'form': form,
-    })
+        "icons": ricons,
+    }, )
 
 #メイン画面遷移時チェック
 @login_required
@@ -87,6 +94,16 @@ def main(request):
     if char_count == 0:
         return redirect('onboarding')
 
+    # ログインユーザのキャラ一覧
+    characters = Character.objects.filter(user=request.user).order_by('id')
+
+    # とりあえず先頭を「選択中キャラ」として扱う
+    selected = characters.first()
+
+    context = {
+        'characters': characters,
+        'selected': selected,
+    }
     # キャラ一覧や探索ボタンをここで描画
     return render(request, 'main.html', {
         # 'characters': Character.objects.filter(user=request.user),

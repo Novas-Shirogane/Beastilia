@@ -58,9 +58,26 @@ button:hover {
 </style>
 </head>
 <body>
-<div class="container">
+<div class="header">
+    <div class="header-left">
+        Beastilia（仮） メインメニュー
+        <div class="char-info-line">
+            {% if selected %}
+                操作中キャラ：
+                <strong>{{ selected.name }}</strong>
+                （ランク: {{ selected.rank }} / ロケーションID: {{ selected.location.name }}）
+            {% else %}
+                操作中キャラ：ここにはだれもいない
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-right">
+        ログイン中：{{ request.user.userprofile.account_id }}<br>
+        <a href="/logout/" style="color:#ccc;">ログアウト</a>
+    </div>
+</div>
 
-    <h1>最初のキャラクター作成</h1>
+<div class="container">
 
     <p style="font-size:14px;color:#ccc;">
         メイン画面だぜい！。<br>

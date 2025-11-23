@@ -1,4 +1,4 @@
-#ここは初回チュートリアルを挿入する画面
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -55,29 +55,60 @@ button:hover {
     margin: 5px 0 0;
     font-size: 13px;
 }
+.race-icon {
+  width: 72px;
+  height: 72px;
+}
+
+.race-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.race-option {
+  text-align: center;
+  cursor: pointer;
+  background: #222;
+  padding: 8px;
+  border-radius: 6px;
+}
 </style>
 </head>
 <body>
+
+<script>
+  // Django側で決めた言語コードを埋め込む例（"ja" / "en" など）
+  const LANG = "{{ language_code|default:'ja' }}";
+</script>
+<script src="{% static 'game/onboarding_script.js' %}"></script>
+
 <div class="container">
 
-    <h1>最初のキャラクター作成</h1>
+    <h1 id="title"></h1>
 
-    <p style="font-size:14px;color:#ccc;">
-        冒険を始めるために、最初のキャラクターを作成してください。<br>
-        名前は日本語・中国語・英語など自由に使えます（最大15文字）。
-    </p>
+    <p id="description" style="font-size:14px;color:#ccc;"></p>
 
     <form method="post">
+
+        <div class="race-list">
+        {% for icon in icons %}
+            <div class="race-option">
+            <img src="{% static 'game/icons/races/' %}{{ icon }}" class="race-icon">
+            </div>
+        {% endfor %}
+        </div>
+
         {% csrf_token %}
         {{ form.non_field_errors }}
 
         <label>
-            {{ form.name.label_tag }}
+            <span id="label_name"></span>
             {{ form.name }}
             {{ form.name.errors }}
         </label>
 
-        <button type="submit">作成する</button>
+        <button id="button_create" type="submit"></button>
     </form>
 
 </div>
