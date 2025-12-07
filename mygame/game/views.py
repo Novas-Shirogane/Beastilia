@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm, LoginForm, CharacterCreateForm
 from .models import UserProfile, Character
+from django.conf import settings
+
+from .utils import load_article_meta, CONTENT_DIR
+import markdown
+import yaml
 
 def home(request):
     return render(request, 'home.html')
@@ -108,6 +113,63 @@ def main(request):
     return render(request, 'main.html', {
         # 'characters': Character.objects.filter(user=request.user),
     })
+def news_list(request):
+    articles = []
+
+    for filename in os.listdir(CONTENT_DIR):
+        if not filename.endswith(".md"):
+            continue
+
+        path = os.path.join(CONTENT_DIR, filename)
+        meta = load_article_meta(path)
+        if not meta:
+            continue
+
+        # slug はファイル名から拝借（.md を取るだけ）
+        slug = os.path.splitext(filename)[0]
+
+        articles.append({
+            "slug": slug,
+            "title": meta["title"],
+            "summary": meta.get("summary", ""),
+            "date": meta["date"],          # 表示用文字列
+            "date_obj": meta["date_obj"],  # ソート用
+        })
+
+    # 日付降順でソート（新しい順）
+    articles.sort(key=lambda x: x["date_obj"], reverse=True)
+
+    return render(request, "news_list.html", {"articles": articles})
+
+def news_detail(request, slug):
+    # mdファイルのパスを組み立てる
+    md_path = os.path.join(
+        settings.BASE_DIR,
+        "content",
+        "news",
+        f"{slug}.md"
+    )
+
+    # md読み込み
+    with open(md_path, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    meta = {}
+    body = text
+
+    # 先頭が --- で始まる = フロントマター（メタデータ）とする
+    if text.startswith("---"):
+        # --- メタ --- 内容
+        _, fm_text, body = text.split("---", 2)
+        meta = yaml.safe_load(fm_text) or {}
+
+    # 表示する内容だけをMarkdown → HTMLに変換する
+    html = markdown.markdown(body, extensions=["fenced_code", "tables"])
+
+    return render(request, "news_detail.html", {
+        "content": html,
+        "meta": meta,
+        })
 
 def logout_view(request):
     auth_logout(request)
