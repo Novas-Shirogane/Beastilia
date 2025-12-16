@@ -1,0 +1,14 @@
+.race-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+.race-option { text-align: center; }
+
+.race-name {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #ccc;
+}

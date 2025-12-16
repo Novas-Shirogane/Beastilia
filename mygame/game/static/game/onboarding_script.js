@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("description").innerHTML =
         data.description.replace(/\n/g, "<br>");
 
+      document.getElementById("direction_1").textContent = data.direction_1;
+      document.getElementById("direction_1_desc").innerHTML =
+        data.direction_1_desc.replace(/\n/g, "<br>");
       document.getElementById("label_name").textContent = data.label_name;
       document.getElementById("button_create").textContent = data.button_create;
     })

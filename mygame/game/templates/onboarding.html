@@ -4,84 +4,33 @@
 <head>
 <meta charset="UTF-8">
 <title>ビースティリア（仮）チュートリアル</title>
-<style>
-body {
-    background: #1e1e1e;
-    color: #eee;
-    font-family: sans-serif;
-    margin: 0;
-}
-.container {
-    max-width: 400px;
-    margin: 60px auto;
-    background: #2b2b2b;
-    padding: 20px 30px;
-    border-radius: 4px;
-}
-h1 {
-    text-align: center;
-    margin-top: 0;
-}
-label {
-    display: block;
-    margin-top: 15px;
-}
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 3px;
-    border: 1px solid #555;
-    background: #1a1a1a;
-    color: #eee;
-}
-button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    background: #4a4a4a;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-}
-button:hover {
-    background: #666;
-}
-.errorlist {
-    color: #ff8080;
-    list-style: none;
-    padding-left: 0;
-    margin: 5px 0 0;
-    font-size: 13px;
-}
-.race-icon {
-  width: 72px;
-  height: 72px;
-}
 
-.race-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.race-option {
-  text-align: center;
-  cursor: pointer;
-  background: #222;
-  padding: 8px;
-  border-radius: 6px;
-}
-</style>
 </head>
 <body>
+    <div class="header">
+        <div class="logo">Beastilia（仮）</div>
+        <div>― １日１回の巡りゆく冒険 ―</div>
+
+        {% if user.is_authenticated %}
+            <div style="margin-top:10px;font-size:14px;">
+                ログイン中ユーザ: {{ user.userprofile.account_id }} /
+                <a href="/logout/" style="color:#ccc;">ログアウト</a>
+            </div>
+        {% else %}
+            <div style="margin-top:10px;font-size:14px;">
+                ログインしていません
+            </div>
+        {% endif %}
+    </div>
 
 <script>
   // Django側で決めた言語コードを埋め込む例（"ja" / "en" など）
   const LANG = "{{ language_code|default:'ja' }}";
 </script>
 <script src="{% static 'game/onboarding_script.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
 <div class="container">
 
@@ -89,12 +38,24 @@ button:hover {
 
     <p id="description" style="font-size:14px;color:#ccc;"></p>
 
+    <h2 id="direction_1"></h2>
+    <p id="direction_1_desc"></p>
+
+    <h2 id="direction_2"></h2>
+    <h2 id="direction_3"></h2>
+
     <form method="post">
 
         <div class="race-list">
         {% for icon in icons %}
             <div class="race-option">
-            <img src="{% static 'game/icons/races/' %}{{ icon }}" class="race-icon">
+                <img 
+                    src="{% static 'game/icons/races/' %}{{ icon }}" 
+                    class="race-icon"
+                >
+                <div class="race-name">
+                    {{ icon| cut:".png" }}
+                </div>
             </div>
         {% endfor %}
         </div>

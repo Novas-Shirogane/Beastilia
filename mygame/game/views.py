@@ -1,4 +1,7 @@
 import os
+
+import markdown
+import yaml
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -6,11 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import SignUpForm, LoginForm, CharacterCreateForm
 from .models import UserProfile, Character
-from django.conf import settings
-
 from .utils import load_article_meta, CONTENT_DIR
-import markdown
-import yaml
 
 def home(request):
     return render(request, 'home.html')
@@ -62,12 +61,12 @@ def login_view(request):
 
     return render(request, 'login.html', {'form': form})
 
-#初回チュートリアル
+# 初回チュートリアル
 @login_required
 def onboarding(request):
     profile = request.user.userprofile
 
-    #種族アイコン一覧を表示する
+    # 種族アイコン一覧を表示する
     icons_dir = os.path.join(settings.BASE_DIR, "game/static/game/icons/races")
     ricons = [f for f in os.listdir(icons_dir) if f.endswith(".png")]
 
@@ -90,7 +89,7 @@ def onboarding(request):
         "icons": ricons,
     }, )
 
-#メイン画面遷移時チェック
+# メイン画面遷移時チェック
 @login_required
 def main(request):
     profile = request.user.userprofile
@@ -113,6 +112,7 @@ def main(request):
     return render(request, 'main.html', {
         # 'characters': Character.objects.filter(user=request.user),
     })
+    
 def news_list(request):
     articles = []
 
