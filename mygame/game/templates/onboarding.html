@@ -1,77 +1,95 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>ビースティリア（仮）チュートリアル</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ビースティリア（仮）チュートリアル</title>
+  </head>
 
-</head>
-<body>
+  <body>
     <div class="header">
-        <div class="logo">Beastilia（仮）</div>
-        <div>― １日１回の巡りゆく冒険 ―</div>
+      <div class="logo">Beastilia（仮）</div>
+      <div>― １日１回の巡りゆく冒険 ―</div>
 
-        {% if user.is_authenticated %}
-            <div style="margin-top:10px;font-size:14px;">
-                ログイン中ユーザ: {{ user.userprofile.account_id }} /
-                <a href="/logout/" style="color:#ccc;">ログアウト</a>
-            </div>
-        {% else %}
-            <div style="margin-top:10px;font-size:14px;">
-                ログインしていません
-            </div>
-        {% endif %}
+      {% if user.is_authenticated %}
+      <div style="margin-top: 10px; font-size: 14px">
+        ログイン中ユーザ: {{ user.userprofile.account_id }} /
+        <a href="/logout/" style="color: #ccc">ログアウト</a>
+      </div>
+      {% else %}
+      <div style="margin-top: 10px; font-size: 14px">ログインしていません</div>
+      {% endif %}
     </div>
 
-<script>
-  // Django側で決めた言語コードを埋め込む例（"ja" / "en" など）
-  const LANG = "{{ language_code|default:'ja' }}";
-</script>
-<script src="{% static 'game/onboarding_script.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/base.css' %}">
-<link rel="stylesheet" href="{% static 'css/onboarding.css' %}">
-<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
 
-<div class="container">
+    <div class="container">
+      <h1 id="title"></h1>
 
-    <h1 id="title"></h1>
+      <p id="description" style="font-size: 14px; color: #ccc"></p>
 
-    <p id="description" style="font-size:14px;color:#ccc;"></p>
+      <h2 id="direction_1"></h2>
+      <p id="direction_1_desc"></p>
 
-    <h2 id="direction_1"></h2>
-    <p id="direction_1_desc"></p>
+      <h2 id="direction_2"></h2>
+      <h2 id="direction_3"></h2>
 
-    <h2 id="direction_2"></h2>
-    <h2 id="direction_3"></h2>
-
-    <form method="post">
-
+      <form method="post" id="create_form">
         <div class="race-list">
-        {% for icon in icons %}
-            <div class="race-option">
-                <img 
-                    src="{% static 'game/icons/races/' %}{{ icon }}" 
-                    class="race-icon"
-                >
-                <div class="race-name">
-                    {{ icon| cut:".png" }}
-                </div>
-            </div>
-        {% endfor %}
+          {% for icon in icons %}
+          <div class="race-option">
+            <img
+              src="{% static 'game/icons/races/' %}{{ icon }}"
+              class="race-icon"
+              data-race="{{ icon| cut:'.png' }}"
+            />
+            <div class="race-name">{{ icon| cut:".png" }}</div>
+          </div>
+          {% endfor %}
         </div>
 
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+        {% csrf_token %} {{ form.non_field_errors }}
 
         <label>
-            <span id="label_name"></span>
-            {{ form.name }}
-            {{ form.name.errors }}
+          <span id="label_name"></span>
+          {{ form.name }} {{ form.name.errors }}
         </label>
 
         <button id="button_create" type="submit"></button>
-    </form>
+      </form>
+    </div>
+    <input type="hidden" name="race" id="race_input" value="" />
 
-</div>
-</body>
+    <div id="race_modal_overlay" class="modal-overlay" hidden>
+      <div class="modal">
+        <h3 id="race_modal_title"></h3>
+        <p id="race_modal_desc"></p>
+
+        <div class="modal-actions">
+          <button type="button" id="race_modal_cancel">Not</button>
+          <button type="button" id="race_modal_ok">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="confirm_modal_overlay" class="modal-overlay" hidden>
+      <div class="modal">
+        <h3>最終確認</h3>
+        <p id="confirm_modal_text"></p>
+
+        <div class="modal-actions">
+          <button type="button" id="confirm_cancel">やめる</button>
+          <button type="button" id="confirm_ok">生成する</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'game/onboarding_script.js' %}"></script>
+    <script>
+      // Django側で決めた言語コードを埋め込む例（"ja" / "en" など）
+      const LANG = "{{ language_code|default:'ja' }}";
+    </script>
+  </body>
 </html>

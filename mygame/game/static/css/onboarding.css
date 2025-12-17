@@ -12,3 +12,43 @@
   font-size: 12px;
   color: #ccc;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  width: min(520px, 90vw);
+  padding: 16px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  color: #ddd;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+#race_modal_overlay[hidden] {
+  display: none !important;
+}
+
+#confirm_modal_overlay[hidden] {
+  display: none !important;
+}
+
+/* 選択したアイコンを囲う */
+.race-option.is-selected {
+  outline: 3px solid #eaff00;   
+  outline-offset: 4px;
+  border-radius: 10px;
+}

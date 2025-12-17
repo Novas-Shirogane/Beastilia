@@ -24,3 +24,6 @@ class Character(models.Model):
     job = models.PositiveSmallIntegerField(default=0)
     rank = models.PositiveSmallIntegerField(default=1)
     location = models.ForeignKey("Location", on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
