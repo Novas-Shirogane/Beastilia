@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   okBtn.addEventListener("click", () => {
     if (!selectedRace) return;
     raceInput.value = selectedRace;
+    console.log("set race:", raceInput.value);
 
     // 既存の選択枠を外す
     document.querySelectorAll(".race-option.is-selected")

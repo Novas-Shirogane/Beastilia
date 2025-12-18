@@ -75,6 +75,16 @@ def onboarding(request):
         if form.is_valid():
             char = form.save(commit=False)
             char.user = request.user
+            race_key = request.POST.get("race") 
+            RACE_MAP = {
+                "Aquasoul": 1,
+                "Fangsoul": 2,
+                "Forestsoul": 3,
+            }
+            char.race = RACE_MAP.get(race_key, 0)
+            print("POST:", request.POST)
+            print("race_key:", race_key)
+
             char.save()
 
             profile.onboarding_completed = True

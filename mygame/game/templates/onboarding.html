@@ -37,6 +37,7 @@
       <h2 id="direction_3"></h2>
 
       <form method="post" id="create_form">
+        <input type="hidden" name="race" id="race_input" value="" />
         <div class="race-list">
           {% for icon in icons %}
           <div class="race-option">
@@ -60,7 +61,6 @@
         <button id="button_create" type="submit"></button>
       </form>
     </div>
-    <input type="hidden" name="race" id="race_input" value="" />
 
     <div id="race_modal_overlay" class="modal-overlay" hidden>
       <div class="modal">
