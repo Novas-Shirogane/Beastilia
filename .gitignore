@@ -4,7 +4,6 @@ __pycache__/
 
 # Django
 db.sqlite3
-/static/
 media/
 
 # VSCode
