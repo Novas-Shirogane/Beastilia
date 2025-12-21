@@ -52,3 +52,22 @@
   outline-offset: 4px;
   border-radius: 10px;
 }
+
+/* ワールドマップのサイズ */
+.world-map {
+  width: 100%;
+  height: auto;
+}
+
+.edge .line { 
+  fill:none; 
+  stroke:#999; 
+  stroke-width:3;
+}
+
+.edge .hit  { 
+  fill:none; 
+  stroke:transparent; 
+  stroke-width:20; 
+  cursor:pointer; 
+}

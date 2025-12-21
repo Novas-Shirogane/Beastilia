@@ -1,0 +1,27 @@
+{# 共通表示マップ画面です。 #}
+<svg viewBox="0 0 1000 600" class="world-map">
+  <image
+    href="/static/game/map/map(仮).jpg"
+    x="0"
+    y="0"
+    width="1000"
+    height="600"
+    preserveAspectRatio="xMidYMid slice"
+  />
+
+  <g class="node" data-id="city_a">
+    <circle cx="200" cy="300" r="10" fill="red" />
+    <text x="215" y="305">都市A</text>
+  </g>
+  <path id="road_ab" d="M200 300 L500 320" stroke="black" stroke-width="2" />
+
+  <g class="node" data-id="city_b">
+    <circle cx="500" cy="300" r="10" />
+    <text x="515" y="305">都市B</text>
+  </g>
+
+  <g class="edge" data-from="city_a" data-to="city_b">
+    <path class="hit" d="M200 300 C300 250, 400 350, 500 300" />
+    <path class="line" d="M200 300 C300 250, 400 350, 500 300" />
+  </g>
+</svg>

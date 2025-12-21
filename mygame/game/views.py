@@ -2,7 +2,7 @@ import os
 
 import markdown
 import yaml
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -61,9 +61,22 @@ def login_view(request):
 
     return render(request, 'login.html', {'form': form})
 
-# 初回チュートリアル
+# 初回チュートリアル分岐ハブ
 @login_required
 def onboarding(request):
+    # まずキャラを持ってるか（複数キャラ対応なら「対象キャラ」を決める）
+    char = Character.objects.filter(user=request.user).order_by("-id").first()
+
+    if not char:
+        return redirect("onboarding_intro")
+
+    # ロケーションが決まっていなければロケーション選択画面に遷移
+    if char.onboarding_step == OnboardingStep.CREATED:
+        return redirect("onboarding_location")
+
+# 初回チュートリアル キャラ作成
+@login_required
+def onboarding_intro(request):
     profile = request.user.userprofile
 
     # 種族アイコン一覧を表示する
@@ -87,17 +100,49 @@ def onboarding(request):
 
             char.save()
 
-            profile.onboarding_completed = True
+            # すべてのチュートリアル完了後にONにする
+            # profile.onboarding_completed = True
             profile.save()
 
-            return redirect('main')
+            return redirect('onboarding_location')
     else:
         form = CharacterCreateForm()
 
-    return render(request, 'onboarding.html', {
+    return render(request, 'onboarding_intro.html', {
         'form': form,
         "icons": ricons,
     }, )
+
+# 初回チュートリアル 初期ロケーション選択
+@login_required
+def onboarding_location(request):
+    profile = request.user.userprofile
+
+    # マップを表示する（後でＵＸ改良）
+
+    if request.method == 'POST':
+        location_id = request.POST.get("location_id")
+        # location_id が無い一致するものが無いならエラーメッセージ表示（仮）
+        if not location_id:
+            return render(request, "onboarding_location.html", {
+            "error": "ロケーションを選択してください"
+        })
+
+        location = get_object_or_404(Location, pk=location_id)
+        char.location = location
+
+        # チュートリアルフラグを更新
+        char.onboarding_step = OnboardingStep.LOCATION_SELECTED
+
+        char.save()
+
+        # すべてのチュートリアル完了後にONにする
+        profile.onboarding_completed = True
+        profile.save()
+
+        return redirect('main')
+
+    return render(request, "onboarding_location.html", {})
 
 # メイン画面遷移時チェック
 @login_required
@@ -180,6 +225,9 @@ def news_detail(request, slug):
         "content": html,
         "meta": meta,
         })
+
+def under_construction(request):
+    return render(request, "under_construction.html")
 
 def logout_view(request):
     auth_logout(request)

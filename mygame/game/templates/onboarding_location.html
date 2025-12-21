@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>初期ロケーション選択</title>
+  </head>
+  <body>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}" />
+
+    <h1>初期ロケーションを選択</h1>
+
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+
+    <svg width="400" height="200">
+      <path
+        d="M10 100 C100 10, 300 10, 390 100"
+        fill="none"
+        stroke="black"
+        stroke-width="2"
+      />
+    </svg>
+
+    {% include "partials/world_map.svg.html" %}
+
+    <form method="post">
+      {% csrf_token %}
+
+      <label>
+        <input type="radio" name="location_id" value="1" />
+        王都アウレリア </label
+      ><br />
+
+      <label>
+        <input type="radio" name="location_id" value="2" />
+        港町ネレイス </label
+      ><br />
+
+      <label>
+        <input type="radio" name="location_id" value="3" />
+        森の都シルヴァ </label
+      ><br /><br />
+
+      <button type="submit">決定</button>
+    </form>
+  </body>
+</html>
