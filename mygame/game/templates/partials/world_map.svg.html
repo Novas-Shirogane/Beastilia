@@ -11,8 +11,8 @@
 
   <defs>
     <symbol id="cityNode" overflow="visible">
-      <circle r="10" class="dot" />
-      <circle r="14" class="hit" />
+      <circle r="14" class="dot" />
+      <circle r="30" class="hit" />
       <text x="15" y="5" class="label"></text>
     </symbol>
   </defs>
@@ -22,17 +22,9 @@
     <text x="15" y="5" class="label">都市A</text>
   </g>
 
-  <g class="node" data-id="city_a">
-    <circle cx="200" cy="300" r="10" fill="red" />
-    <circle class="hit" cx="200" cy="300" r="14" />
-    <text x="215" y="305">都市A</text>
-  </g>
-  <path id="road_ab" d="M200 300 L500 320" stroke="black" stroke-width="2" />
-
-  <g class="node" data-id="city_b">
-    <circle cx="500" cy="300" r="10" />
-    <circle class="hit" cx="500" cy="300" r="14" />
-    <text x="515" y="305">都市B</text>
+  <g class="node" data-id="city_b" transform="translate(500 300)">
+    <use href="#cityNode" />
+    <text x="15" y="5" class="label">都市B</text>
   </g>
 
   <g class="edge" data-from="city_a" data-to="city_b">

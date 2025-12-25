@@ -15,8 +15,8 @@
   z-index: 10;
 }
 
-g.node .hit{
-  fill: rgba(0,0,0,0);      /* 透明 */
-  stroke: rgba(0,0,0,0);    /* 透明 */
+.hit{
+  fill: transparent;
+  stroke: transparent;    /* 透明 */
   pointer-events: all;      /* ここが重要 */
 }
