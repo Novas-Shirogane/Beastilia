@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="logo">Beastilia（仮）</div>
+  <div>― １日１回の巡りゆく冒険 ―</div>
+
+  {% if user.is_authenticated %}
+  <div style="margin-top: 10px; font-size: 14px">
+    ログイン中ユーザ: {{ user.userprofile.account_id }} /
+    <a href="/logout/" style="color: #ccc">ログアウト</a>
+  </div>
+  {% else %}
+  <div style="margin-top: 10px; font-size: 14px">ログインしていません</div>
+  {% endif %}
+</div>

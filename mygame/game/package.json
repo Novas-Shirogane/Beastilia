@@ -1,0 +1,11 @@
+{
+  "name": "beastilia-frontend",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w"
+  }
+}

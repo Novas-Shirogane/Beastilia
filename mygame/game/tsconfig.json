@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "rootDir": "static/game/src",
+    "outDir": "static/game/dist",
+    "target": "ES2019",
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "lib": ["ES2019", "DOM"]
+  },
+  "include": ["static/game/src/**/*.ts"]
+}

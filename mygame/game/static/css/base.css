@@ -2,6 +2,9 @@ html, body { height: 100%; }
 
 body {
     background: linear-gradient(to bottom, #0c1a20, #081014);
+    display: flex;
+    /* ↓がないと横分割になる。 */
+    flex-direction: column;
     color: #eee;
     font-family: sans-serif;
     margin: 0;

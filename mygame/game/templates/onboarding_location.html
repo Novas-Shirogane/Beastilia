@@ -1,63 +1,37 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>初期ロケーション選択</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/onboarding.css' %}" />
-  </head>
-  <body>
-    <div class="header">
-      <div class="logo">Beastilia（仮）</div>
-      <div>― １日１回の巡りゆく冒険 ―</div>
+{% extends "base.html" %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/onboarding.css' %}" />
+<link rel="stylesheet" href="{% static 'css/map.css' %}" />
+{% endblock %} {% block content %}
+<h1>初期ロケーションを選択</h1>
 
-      {% if user.is_authenticated %}
-      <div style="margin-top: 10px; font-size: 14px">
-        ログイン中ユーザ: {{ user.userprofile.account_id }} /
-        <a href="/logout/" style="color: #ccc">ログアウト</a>
-      </div>
-      {% else %}
-      <div style="margin-top: 10px; font-size: 14px">ログインしていません</div>
-      {% endif %}
-    </div>
+{% if error %}
+<p style="color: red">{{ error }}</p>
+{% endif %}
 
-    <h1>初期ロケーションを選択</h1>
+<div class="map-wrap">
+  {% include "partials/world_map.svg.html" %}
+  <div id="map-tooltip" class="map-tooltip" hidden></div>
+</div>
 
-    {% if error %}
-    <p style="color: red">{{ error }}</p>
-    {% endif %}
+<form method="post">
+  {% csrf_token %}
 
-    <svg width="400" height="200">
-      <path
-        d="M10 100 C100 10, 300 10, 390 100"
-        fill="none"
-        stroke="black"
-        stroke-width="2"
-      />
-    </svg>
+  <label>
+    <input type="radio" name="location_id" value="1" />
+    王都アウレリア </label
+  ><br />
 
-    {% include "partials/world_map.svg.html" %}
+  <label>
+    <input type="radio" name="location_id" value="2" />
+    港町ネレイス </label
+  ><br />
 
-    <form method="post">
-      {% csrf_token %}
+  <label>
+    <input type="radio" name="location_id" value="3" />
+    森の都シルヴァ </label
+  ><br /><br />
 
-      <label>
-        <input type="radio" name="location_id" value="1" />
-        王都アウレリア </label
-      ><br />
-
-      <label>
-        <input type="radio" name="location_id" value="2" />
-        港町ネレイス </label
-      ><br />
-
-      <label>
-        <input type="radio" name="location_id" value="3" />
-        森の都シルヴァ </label
-      ><br /><br />
-
-      <button type="submit">決定</button>
-    </form>
-  </body>
-</html>
+  <button type="submit">決定</button>
+</form>
+<script type="module" src="{% static 'game/dist/map_core.js' %}"></script>
+{% endblock %}
