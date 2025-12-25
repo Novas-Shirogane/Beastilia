@@ -11,3 +11,21 @@ media/
 
 # OS
 .DS_Store
+
+# Node / TypeScript
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript build output（出力先に合わせて）
+dist/
+build/
+*.js
+*.js.map
+*.d.ts
+*.tsbuildinfo
+
+# TS build artifacts (ビルド生成物)
+static/game/dist/

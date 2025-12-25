@@ -1,0 +1,11 @@
+{
+    "_comment": "将来的にDBに取り込まれます",
+    "viewBox": [0, 0, 1000, 600],
+    "cities": {
+    "city_a": {"x": 200, "y": 300, "label": "都市A"},
+    "city_b": {"x": 500, "y": 320, "label": "都市B"}
+  },
+  "edges": [
+    {"id": "road_ab", "from": "city_a", "to": "city_b", "bend": 80}
+  ]
+}

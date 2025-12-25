@@ -4,11 +4,30 @@
   <head>
     <meta charset="UTF-8" />
     <title>工事中ページ</title>
-  </head>
-  <body>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+  </head>
 
-    <h1>▲このページは現在工事中です▲</h1>
-    <div>― 実装まで今しばらくお待ちください ―</div>
+  <body>
+    <div class="header">
+      <div class="logo">Beastilia（仮）</div>
+      <div>― １日１回の巡りゆく冒険 ―</div>
+
+      {% if user.is_authenticated %}
+      <div style="margin-top: 10px; font-size: 14px">
+        ログイン中ユーザ: {{ user.userprofile.account_id }} /
+        <a href="/logout/" style="color: #ccc">ログアウト</a>
+      </div>
+      {% else %}
+      <div style="margin-top: 10px; font-size: 14px">ログインしていません</div>
+      {% endif %}
+    </div>
+
+    <main class="content">
+      <h1>▲このページは現在工事中です▲</h1>
+      <div>― 実装まで今しばらくお待ちください ―</div>
+    </main>
+
+    <div class="footer">&copy; 2025 Beastilia Project</div>
   </body>
 </html>

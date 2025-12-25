@@ -4,10 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <title>初期ロケーション選択</title>
-  </head>
-  <body>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/onboarding.css' %}" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">Beastilia（仮）</div>
+      <div>― １日１回の巡りゆく冒険 ―</div>
+
+      {% if user.is_authenticated %}
+      <div style="margin-top: 10px; font-size: 14px">
+        ログイン中ユーザ: {{ user.userprofile.account_id }} /
+        <a href="/logout/" style="color: #ccc">ログアウト</a>
+      </div>
+      {% else %}
+      <div style="margin-top: 10px; font-size: 14px">ログインしていません</div>
+      {% endif %}
+    </div>
 
     <h1>初期ロケーションを選択</h1>
 

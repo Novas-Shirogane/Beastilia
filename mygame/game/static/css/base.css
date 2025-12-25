@@ -1,3 +1,5 @@
+html, body { height: 100%; }
+
 body {
     background: linear-gradient(to bottom, #0c1a20, #081014);
     color: #eee;
@@ -36,9 +38,13 @@ body {
 .menu a:hover {
     background: #555;
 }
-.footer {
-    background-color: #0c1a20;
-    margin-top: 40px;
-    font-size: 12px;
-    color: #aaa;
+
+.content{ flex: 1; }
+
+.footer{
+  margin-top: 0;
+  padding: 8px 0;
+  background-color: #0c1a20;
+  font-size: 12px;
+  color: #aaa;
 }
